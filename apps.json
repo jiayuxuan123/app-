@@ -1,0 +1,15 @@
+[
+  {
+    "id": "example-app-1",
+    "name": "纯前端计算器",
+    "tagline": "一个简单易用的纯前端计算器。",
+    "description": "这个计算器完全由HTML、CSS和JavaScript构建，不依赖任何后端服务。支持基本的加减乘除运算，界面简洁明了，适合日常快速计算。代码开源，欢迎学习和贡献。",
+    "logo_url": "https://via.placeholder.com/120x120/007bff/ffffff?text=Calc",
+    "screenshot_url": "https://via.placeholder.com/600x400/e0e0e0/333333?text=Calculator+Screenshot",
+    "demo_url": "https://your-github-username.github.io/your-calculator-repo/",
+    "github_url": "https://github.com/your-github-username/your-calculator-repo/",
+    "author": "您的名字",
+    "date_added": "2025-07-11"
+  }
+  /* 更多的应用将以类似格式添加到这里 */
+]

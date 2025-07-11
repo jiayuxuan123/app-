@@ -258,6 +258,266 @@
         <h1>纯前端应用商店</h1>
         <p class="subtitle">分享和发现无需后端即可运行的酷炫应用！</p>
     </header>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纯前端应用商店</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff; /* 主色调，蓝色 */
+            --primary-dark: #0056b3;
+            --accent-color: #28a745; /* 强调色，绿色 */
+            --accent-dark: #218838;
+            --text-dark: #343a40;
+            --text-medium: #6c757d;
+            --bg-light: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0; /* 移除默认padding，由容器控制 */
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 最小高度100vh，让footer在底部 */
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em; /* 手机端标题大小 */
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .container {
+            flex-grow: 1; /* 让容器填充剩余空间 */
+            max-width: 960px;
+            margin: 25px auto;
+            padding: 0 15px; /* 左右边距 */
+        }
+
+        .controls {
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column; /* 手机端垂直排列 */
+            gap: 15px; /* 间距 */
+        }
+        @media (min-width: 600px) {
+            .controls {
+                flex-direction: row; /* PC端横向排列 */
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px; /* 左边留图标位置 */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+        .search-box::before { /* 搜索图标 */
+            content: "🔍";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-medium);
+        }
+
+        .submit-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            white-space: nowrap; /* 防止按钮文字换行 */
+            box-shadow: 0 2px 5px var(--shadow-light);
+            text-decoration: none; /* 如果是a标签 */
+            text-align: center;
+        }
+        .submit-button:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        /* 应用列表 */
+        .app-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 适应性网格布局 */
+            gap: 25px; /* 卡片间距 */
+            padding-bottom: 30px;
+        }
+
+        /* 应用卡片 */
+        .app-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-medium);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-medium);
+        }
+
+        .app-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .app-card-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 15%;
+            margin-right: 15px;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0; /* 防止logo缩小 */
+        }
+        .app-card-info {
+            flex-grow: 1;
+        }
+        .app-card-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1.3;
+        }
+        .app-card-tagline {
+            font-size: 0.85em;
+            color: var(--text-medium);
+            margin-top: 3px;
+        }
+
+        .app-card-description {
+            font-size: 0.95em;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* 限制描述显示3行 */
+            -webkit-box-orient: vertical;
+        }
+
+        .app-card-actions {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: auto; /* 推到底部 */
+        }
+        .app-card-button {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .app-card-button.demo {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .app-card-button.demo:hover {
+            background-color: var(--primary-dark);
+        }
+        .app-card-button.github {
+            background-color: #333;
+            color: white;
+        }
+        .app-card-button.github:hover {
+            background-color: #555;
+        }
+
+        /* 无结果提示 */
+        .no-results {
+            text-align: center;
+            color: var(--text-medium);
+            margin-top: 50px;
+            font-size: 1.2em;
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            font-size: 0.85em;
+            margin-top: auto; /* 推到底部 */
+        }
+        .footer a {
+            color: #add8e6; /* 浅蓝色链接 */
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>纯前端应用商店</h1>
+        <p class="subtitle">分享和发现无需后端即可运行的酷炫应用！</p>
+    </header>
 
     <main class="container">
         <div class="controls">

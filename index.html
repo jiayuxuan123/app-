@@ -185,15 +185,29 @@
             margin-top: 3px;
         }
 
+        /* 描述和展开/收起按钮的样式 */
         .app-card-description {
             font-size: 0.95em;
             color: var(--text-dark);
-            margin-bottom: 20px;
+            margin-bottom: 5px; /* 调整间距 */
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 3; /* 默认显示3行 */
             -webkit-box-orient: vertical;
+        }
+        /* 展开状态下，显示所有内容 */
+        .app-card-description.expanded {
+            -webkit-line-clamp: unset;
+        }
+
+        .read-more-btn {
+            font-size: 0.85em;
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: underline;
+            margin-bottom: 20px; /* 调整间距 */
+            text-align: right; /* 按钮靠右 */
         }
 
         .app-card-actions {
@@ -268,73 +282,101 @@
         </div>
 
         <div id="appList" class="app-list">
-            <p class="no-results" style="display: none;">没有找到匹配的应用。</p>
-        </div>
+            </div>
     </main>
 
     <footer class="footer">
-        
-        <p>由 <a href="https://github.com/jiayuxuan123/app-" target="_blank">本商店</a> 提供技术支持</p>
+        <p>由 <a href="https://github.com/jiayuxuan123/app-" target="_blank">App Hub</a> 提供技术支持</p>
     </footer>
 
-<script type="module">
-    // 从 data.js 文件导入应用数据
-    import { allAppsData } from './data.js';
+    <script type="module">
+        import { allAppsData } from './data.js';
 
-    // 渲染应用卡片
-    function displayApps(appsToDisplay) {
-        const appListContainer = document.getElementById('appList');
-        appListContainer.innerHTML = ''; // 清空现有内容
+        function displayApps(appsToDisplay) {
+            const appListContainer = document.getElementById('appList');
+            appListContainer.innerHTML = '';
 
-        if (appsToDisplay.length === 0) {
-            // 如果应用列表为空，动态创建“无结果”提示
-            const noResultsP = document.createElement('p');
-            noResultsP.classList.add('no-results');
-            noResultsP.textContent = '没有找到匹配的应用。';
-            appListContainer.appendChild(noResultsP);
-            return;
+            if (appsToDisplay.length === 0) {
+                const noResultsP = document.createElement('p');
+                noResultsP.classList.add('no-results');
+                noResultsP.textContent = '没有找到匹配的应用。';
+                appListContainer.appendChild(noResultsP);
+                return;
+            }
+
+            appsToDisplay.forEach(app => {
+                const appCard = document.createElement('div'); // 将卡片改为div，因为a标签不能包含a标签
+                appCard.classList.add('app-card');
+                
+                // 检查描述是否过长，以决定是否显示“展开”按钮
+                const descriptionText = app.description || '无描述';
+                const showReadMore = descriptionText.length > 100; // 假设超过100个字符就算长
+
+                appCard.innerHTML = `
+                    <div class="app-card-header">
+                        <img src="${app.logo_url || 'https://via.placeholder.com/60x60?text=App'}" alt="${app.name} Logo" class="app-card-logo">
+                        <div class="app-card-info">
+                            <h2 class="app-card-name">${app.name}</h2>
+                            <p class="app-card-tagline">${app.tagline || '一个优秀应用'}</p>
+                        </div>
+                    </div>
+                    <p class="app-card-description">${descriptionText}</p>
+                    ${showReadMore ? `<span class="read-more-btn" data-expanded="false">展开</span>` : ''}
+                    <div class="app-card-actions">
+                        <a href="${app.demo_url || 'javascript:void(0);'}" target="_blank" class="app-card-button demo">体验</a>
+                        <a href="${app.github_url || 'javascript:void(0);'}" target="_blank" class="app-card-button github">GitHub</a>
+                    </div>
+                `;
+
+                if (showReadMore) {
+                    const readMoreBtn = appCard.querySelector('.read-more-btn');
+                    const descriptionElement = appCard.querySelector('.app-card-description');
+
+                    readMoreBtn.addEventListener('click', (e) => {
+                        e.preventDefault(); // 防止点击后页面跳转或刷新
+                        const isExpanded = readMoreBtn.getAttribute('data-expanded') === 'true';
+
+                        if (isExpanded) {
+                            descriptionElement.classList.remove('expanded');
+                            readMoreBtn.textContent = '展开';
+                            readMoreBtn.setAttribute('data-expanded', 'false');
+                        } else {
+                            descriptionElement.classList.add('expanded');
+                            readMoreBtn.textContent = '收起';
+                            readMoreBtn.setAttribute('data-expanded', 'true');
+                        }
+                    });
+                }
+                
+                // 点击卡片上的任何非按钮区域，跳转到Demo链接
+                appCard.addEventListener('click', (e) => {
+                    // 检查点击的元素是否是按钮或其子元素
+                    if (!e.target.closest('.app-card-button') && !e.target.closest('.read-more-btn')) {
+                        if (app.demo_url) {
+                            window.open(app.demo_url, '_blank');
+                        }
+                    }
+                });
+
+                appListContainer.appendChild(appCard);
+            });
         }
 
-        appsToDisplay.forEach(app => {
-            const appCard = document.createElement('a');
-            appCard.href = app.demo_url;
-            appCard.target = "_blank";
-            appCard.classList.add('app-card');
-            appCard.innerHTML = `
-                <div class="app-card-header">
-                    <img src="${app.logo_url || 'https://via.placeholder.com/60x60?text=App'}" alt="${app.name} Logo" class="app-card-logo">
-                    <div class="app-card-info">
-                        <h2 class="app-card-name">${app.name}</h2>
-                        <p class="app-card-tagline">${app.tagline || '一个纯前端应用'}</p>
-                    </div>
-                </div>
-                <p class="app-card-description">${app.description || '无描述'}</p>
-                <div class="app-card-actions">
-                    <a href="${app.demo_url || 'javascript:void(0);'}" target="_blank" class="app-card-button demo">体验</a>
-                    <a href="${app.github_url || 'javascript:void(0);'}" target="_blank" class="app-card-button github">GitHub</a>
-                </div>
-            `;
-            appListContainer.appendChild(appCard);
+        function filterApps() {
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+            const filteredApps = allAppsData.filter(app => {
+                return (app.name && app.name.toLowerCase().includes(searchTerm)) ||
+                       (app.description && app.description.toLowerCase().includes(searchTerm)) ||
+                       (app.tagline && app.tagline.toLowerCase().includes(searchTerm));
+            });
+            displayApps(filteredApps);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayApps(allAppsData);
         });
-    }
 
-    // 搜索过滤功能
-    function filterApps() {
-        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
-        const filteredApps = allAppsData.filter(app => {
-            return (app.name && app.name.toLowerCase().includes(searchTerm)) ||
-                   (app.description && app.description.toLowerCase().includes(searchTerm)) ||
-                   (app.tagline && app.tagline.toLowerCase().includes(searchTerm));
-        });
-        displayApps(filteredApps);
-    }
-
-    // 页面加载完成后立即显示所有应用
-    document.addEventListener('DOMContentLoaded', () => {
-        displayApps(allAppsData);
-    });
-
-</script>
+    </script>
 
 </body>
 </html>

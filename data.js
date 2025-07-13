@@ -4,7 +4,7 @@
 export const allAppsData = [
   {
     "id": "app-hub-starter",
-    "name": "App Hub",
+    "name": "App Hub_作者：jiayuxuan 123",
     "type": "纯前端",
     "tagline": "一个基于 HTML、CSS 和 JS 的应用商店",
     "description": "这个应用商店本身就是一个纯前端应用，旨在收录和展示各种类型的酷炫应用。它使用模块化 JavaScript 和 CSS 变量构建，响应式设计，支持快速搜索和过滤。您可以基于此项目来构建自己的应用商店。",
@@ -16,7 +16,7 @@ export const allAppsData = [
     "date_added": "2025-07-13"
   },
   {
-    "id": "2048-game",
+    "id": "2048-game_作者：gabrielecirulli",
     "name": "2048",
     "type": "纯前端",
     "tagline": "经典的 2048 游戏，纯前端实现",

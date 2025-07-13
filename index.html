@@ -310,7 +310,7 @@
                 
                 // 检查描述是否过长，以决定是否显示“展开”按钮
                 const descriptionText = app.description || '无描述';
-                const showReadMore = descriptionText.length > 100; // 假设超过100个字符就算长
+                const showReadMore = descriptionText.length > 40; // 假设超过100个字符就算长
 
                 appCard.innerHTML = `
                     <div class="app-card-header">

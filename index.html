@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff; /* 主色调，蓝色 */
+            --primary-dark: #0056b3;
+            --accent-color: #28a745; /* 强调色，绿色 */
+            --accent-dark: #218838;
+            --text-dark: #343a40;
+            --text-medium: #6c757d;
+            --bg-light: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .container {
+            flex-grow: 1;
+            max-width: 960px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .controls {
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        @media (min-width: 600px) {
+            .controls {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-medium);
+        }
+
+        .submit-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px var(--shadow-light);
+            text-decoration: none;
+            text-align: center;
+        }
+        .submit-button:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        /* 应用列表 */
+        .app-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding-bottom: 30px;
+        }
+
+        /* 应用卡片 */
+        .app-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-medium);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-medium);
+        }
+
+        .app-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .app-card-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 15%;
+            margin-right: 15px;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .app-card-info {
+            flex-grow: 1;
+        }
+        .app-card-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1.3;
+        }
+        .app-card-tagline {
+            font-size: 0.85em;
+            color: var(--text-medium);
+            margin-top: 3px;
+        }
+
+        .app-card-description {
+            font-size: 0.95em;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .app-card-actions {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .app-card-button {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .app-card-button.demo {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .app-card-button.demo:hover {
+            background-color: var(--primary-dark);
+        }
+        .app-card-button.github {
+            background-color: #333;
+            color: white;
+        }
+        .app-card-button.github:hover {
+            background-color: #555;
+        }
+
+        /* 无结果提示 */
+        .no-results {
+            text-align: center;
+            color: var(--text-medium);
+            margin-top: 50px;
+            font-size: 1.2em;
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            font-size: 0.85em;
+            margin-top: auto;
+        }
+        .footer a {
+            color: #add8e6;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>App Hub</h1>
+        <p class="subtitle">分享和发现所有酷炫应用！（Share and Discover Awesome Apps）</p>
+    </header>
+
+    <main class="container">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchBar" placeholder="搜索应用名称或描述..." onkeyup="filterApps()">
+            </div>
+            <a href="https://github.com/jiayuxuan123/app-/blob/main/CONTRIBUTING.md" target="_blank" class="submit-button">提交我的应用</a>
+        </div>
+
+        <div id="appList" class="app-list">
+            <p class="no-results" style="display: none;">没有找到匹配的应用。</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        
+        <p>由 <a href="https://github.com/jiayuxuan123/app-" target="_blank">本商店</a> 提供技术支持</p>
+    </footer>
+
+<script type="module">
+    // 从 data.js 文件导入应用数据
+    import { allAppsData } from './data.js';
+
+    // 渲染应用卡片
+    function displayApps(appsToDisplay) {
+        const appListContainer = document.getElementById('appList');
+        appListContainer.innerHTML = ''; // 清空现有内容
+
+        if (appsToDisplay.length === 0) {
+            // 如果应用列表为空，动态创建“无结果”提示
+            const noResultsP = document.createElement('p');
+            noResultsP.classList.add('no-results');
+            noResultsP.textContent = '没有找到匹配的应用。';
+            appListContainer.appendChild(noResultsP);
+            return;
+        }
+
+        appsToDisplay.forEach(app => {
+            const appCard = document.createElement('a');
+            appCard.href = app.demo_url;
+            appCard.target = "_blank";
+            appCard.classList.add('app-card');
+            appCard.innerHTML = `
+                <div class="app-card-header">
+                    <img src="${app.logo_url || 'https://via.placeholder.com/60x60?text=App'}" alt="${app.name} Logo" class="app-card-logo">
+                    <div class="app-card-info">
+                        <h2 class="app-card-name">${app.name}</h2>
+                        <p class="app-card-tagline">${app.tagline || '一个纯前端应用'}</p>
+                    </div>
+                </div>
+                <p class="app-card-description">${app.description || '无描述'}</p>
+                <div class="app-card-actions">
+                    <a href="${app.demo_url || 'javascript:void(0);'}" target="_blank" class="app-card-button demo">体验</a>
+                    <a href="${app.github_url || 'javascript:void(0);'}" target="_blank" class="app-card-button github">GitHub</a>
+                </div>
+            `;
+            appListContainer.appendChild(appCard);
+        });
+    }
+
+    // 搜索过滤功能
+    function filterApps() {
+        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+        const filteredApps = allAppsData.filter(app => {
+            return (app.name && app.name.toLowerCase().includes(searchTerm)) ||
+                   (app.description && app.description.toLowerCase().includes(searchTerm)) ||
+                   (app.tagline && app.tagline.toLowerCase().includes(searchTerm));
+        });
+        displayApps(filteredApps);
+    }
+
+    // 页面加载完成后立即显示所有应用
+    document.addEventListener('DOMContentLoaded', () => {
+        displayApps(allAppsData);
+    });
+
+</script>
+
+</body>
+</html>

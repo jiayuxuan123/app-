@@ -1,62 +1,67 @@
-#贡献指南
+# 贡献指南 (Contribution Guide)
 
-欢迎来到纯前端应用商店！ 我们很高兴您有兴趣分享您的优秀纯前端应用。
+## 欢迎 (Welcome)
 
-本商店旨在收集和展示所有不依赖后端服务器即可独立运行的HTML/CSS/JavaScript项目。
+欢迎为 “App Hub” 贡献您的作品！ (Welcome to contribute to "App Hub"!)
 
-# 贡献指南
+本商店致力于收录任何酷炫、有趣、有用的应用和项目，不设类型限制。只要您的作品可以被展示，都欢迎您来分享。
+(This store is dedicated to curating any cool, interesting, and useful apps and projects without any type restrictions. As long as your work can be showcased, you are welcome to share it.)
 
-欢迎为“应用商店”贡献您的应用！
+## 如何贡献 (How to Contribute)
 
-本商店的目标是收录那些**酷炫、有趣、有用的应用**。我们不限制应用的类型，无论您的应用是纯前端的、需要后端的、移动端的还是桌面端的，只要它能被展示和体验，都欢迎您来分享。
+贡献您的作品非常简单，您只需要修改一个文件：`data.js`。
+(Contributing your work is simple, you only need to modify one file: `data.js`.)
 
-## 如何贡献
+### 1. 准备您的作品信息 (1. Prepare Your Project Information)
 
-贡献您的应用非常简单，您只需要修改一个文件：`data.js`。
+请收集以下关于您的作品的信息，稍后您将用它们来填写数据模板。
+(Please gather the following information about your project, which you will use to fill out the data template.)
 
-### 1. 准备您的应用信息
+* **作品名称 (name)**
+* **作品类型 (type)**: 请注明作品的类型，例如：`纯前端` (Front-end)、`全栈` (Full-stack)、`移动应用` (Mobile App)、`桌面应用` (Desktop App)、`小程序` (Mini Program) 等。
+* **作品标语 (tagline)**：一句话介绍您的作品。 (A one-sentence description.)
+* **作品描述 (description)**：详细描述作品的功能、特点、技术栈等。 (A detailed description of its features, highlights, tech stack, etc.)
+* **作品Logo (logo_url)**：一个图片链接。 (An image link.)
+* **作品截图 (screenshot_url)**：一个图片链接。 (An image link.)
+* **在线体验链接 (demo_url)**：作品可在线访问的 URL 或下载链接。 (The online URL or download link for your project.)
+* **源代码链接 (source_url)**：如果您的作品有公开的源代码，请提供链接（GitHub、Gitee 等）。此项为可选。 (If your project has public source code, please provide the link (GitHub, Gitee, etc.). This is optional.)
+* **作者 (author)**：您的用户名、昵称或原作者的名称。 (Your username, nickname, or the original author's name.)
+* **联系方式 (contact)**: 如果作者有联系方式或主页，可以放在这里。此项为可选。 (If the author has contact information or a homepage, you can put it here. This is optional.)
 
-请收集以下关于您的应用的信息，稍后您将用它们来填写应用模板。
+### 2. 填写数据模板 (2. Fill out the Data Template)
 
-* **应用名称 (name)**
-* **应用类型 (type)**：请注明应用的类型，例如：`纯前端`、`全栈`、`移动应用`、`桌面应用`、`小程序` 等。
-* **应用标语 (tagline)**：一句话介绍您的应用。
-* **应用描述 (description)**：详细描述应用的功能、特点、技术栈等。
-* **应用 Logo (logo_url)**：一个图片链接。
-* **应用截图 (screenshot_url)**：一个图片链接。
-* **在线体验链接 (demo_url)**：应用可在线访问的 URL 或下载链接。
-* **GitHub 仓库链接 (github_url)**：如果您的应用是开源的，请提供仓库链接。此项为可选。
-* **作者 (author)**：您的GitHub用户名、昵称或应用原作者的名称。
-* **联系方式 (contact)**: 如果原作者有联系方式或主页，可以放在这里。此项为可选。
+请将您的作品信息添加到 `data.js` 文件中的 `allAppsData` 数组里。
+(Please add your project information to the `allAppsData` array in the `data.js` file.)
 
-### 2. 填写应用数据模板
+#### **作品数据模板 (Project Data Template)**
 
-请将您的应用信息添加到 `data.js` 文件中的 `allAppsData` 数组里。
+请复制以下模板，并用您的作品信息替换其中的内容。
+(Please copy the template below and replace the content with your project information.)
 
-#### **应用数据模板**
+**重要提示 (Important Note):**
 
-请复制以下模板，并用您的应用信息替换其中的内容。
-
-**重要提示：**
-
-* 请确保您的 `id` 是唯一的，建议使用英文，例如 `your-app-name-v1`。
+* 请确保您的 `id` 是唯一的，建议使用英文，例如 `your-project-name-v1`。
+    (Please ensure your `id` is unique. English is recommended, e.g., `your-project-name-v1`.)
 * 在 `logo_url` 和 `screenshot_url` 字段，如果您没有图片，可以提供一个文字占位符链接。这有助于商店保持内容的完整性。
-* **文字占位符链接示例：**
-    * Logo: `https://via.placeholder.com/120x120?text=应用名称`
-    * 截图: `https://via.placeholder.com/600x400?text=应用名称+截图`
+    (In the `logo_url` and `screenshot_url` fields, if you don't have images, you can provide a text placeholder link. This helps maintain the integrity of the store's content.)
+* **文字占位符链接示例 (Text Placeholder Link Examples):**
+    * Logo: `https://via.placeholder.com/120x120?text=作品名称`
+    * 截图: `https://via.placeholder.com/600x400?text=作品名称+截图`
 
 ```json
 {
-  "id": "您的应用唯一ID",
-  "name": "您的应用名称",
-  "type": "您的应用类型",
-  "tagline": "一句话介绍您的应用",
-  "description": "详细描述您的应用的功能、特点、技术栈等。",
-  "logo_url": "您的应用Logo图片链接（如果暂时没有，可以提供一个文字占位符链接）",
-  "screenshot_url": "您的应用截图图片链接（如果暂时没有，可以提供一个文字占位符链接）",
-  "demo_url": "您的应用可在线体验的URL 或下载链接",
-  "github_url": "您的应用GitHub仓库链接（可选）",
-  "author": "您的GitHub用户名或昵称（原作者名称）",
+  "id": "您的作品唯一ID",
+  "name": "您的作品名称",
+  "type": "您的作品类型",
+  "tagline": "一句话介绍您的作品",
+  "description": "详细描述您的作品的功能、特点、技术栈等。",
+  "logo_url": "您的作品Logo图片链接（如果暂时没有，可以提供一个文字占位符链接）",
+  "screenshot_url": "您的作品截图图片链接（如果暂时没有，可以提供一个文字占位符链接）",
+  "demo_url": "您的作品可在线体验的URL 或下载链接",
+  "source_url": "您的作品源代码链接（可选）",
+  "author": "您的用户名或昵称（原作者名称）",
   "date_added": "YYYY-MM-DD (例如: 2025-07-11)"
 }
+
+
 

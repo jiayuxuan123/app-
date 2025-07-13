@@ -42,11 +42,27 @@
 
 * 请确保您的 `id` 是唯一的，建议使用英文，例如 `your-project-name-v1`。
     (Please ensure your `id` is unique. English is recommended, e.g., `your-project-name-v1`.)
-* 在 `logo_url` 和 `screenshot_url` 字段，如果您没有图片，可以提供一个文字占位符链接。这有助于商店保持内容的完整性。
-    (In the `logo_url` and `screenshot_url` fields, if you don't have images, you can provide a text placeholder link. This helps maintain the integrity of the store's content.)
+* **在 `logo_url` 和 `screenshot_url` 字段，如果您没有图片，您可以留空（""）或提供一个文字占位符链接。**
+    (In the `logo_url` and `screenshot_url` fields, if you don't have images, you can leave the link empty ("") or provide a text placeholder link.)
 * **文字占位符链接示例 (Text Placeholder Link Examples):**
     * Logo: `https://via.placeholder.com/120x120?text=作品名称`
     * 截图: `https://via.placeholder.com/600x400?text=作品名称+截图`
+
+```json
+{
+  "id": "您的作品唯一ID",
+  "name": "您的作品名称",
+  "type": "您的作品类型",
+  "tagline": "一句话介绍您的作品",
+  "description": "详细描述您的作品的功能、特点、技术栈等。",
+  "logo_url": "您的作品Logo图片链接",
+  "screenshot_url": "您的作品截图图片链接",
+  "demo_url": "您的作品可在线体验的URL 或下载链接",
+  "source_url": "您的作品源代码链接（可选）",
+  "author": "您的用户名或昵称（原作者名称）",
+  "date_added": "YYYY-MM-DD (例如: 2025-07-11)"
+}
+
 
 ```json
 {

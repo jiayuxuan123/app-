@@ -30,4 +30,4 @@ https://jiayuxuan123.rth1.xyz/yunluo.html
 
 | 蛋挞原图预览 (jsDelivr 加速) | 存储信息 |
 | :--- | :--- |
-| ![蛋挞](https://fastly.jsdelivr.net/gh/jiayuxuan123/app-@main/images/1768744216968_IMG20260115215643_20260118215012.jpg) | **文件名**: `1768744216968_I...`<br>**目录**: `/images` |
+| ![蛋挞](https://fastly.jsdelivr.net/gh/jiayuxuan123/app-@main/images/1768744216968_IMG20260115215643_20260118215012.jpg)
